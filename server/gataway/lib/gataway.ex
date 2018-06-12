@@ -9,7 +9,7 @@ defmodule Gataway do
     user = authenticate(conn)
     request_path = conn.request_path
 
-    {:ok, res} = upstream(conn, "localhost:5000/#{request_path}", user)
+    {:ok, res} = upstream(conn, "http://localhost:5000/#{request_path}", user)
 
     conn
     |> put_resp_content_type("text/plain")
@@ -23,15 +23,31 @@ defmodule Gataway do
   end
 
   def upstream(conn, url, user) do
-    method = "#{String.downcase(conn.method)}!" |> String.to_atom
+    method = String.downcase(conn.method) |> String.to_atom
 
-    headers =
-      conn.req_headers
-      # |> Keyword.merge([{"x-sem-username", user.username}])
-      # |> Keyword.merge([{"x-sem-id", user.id}])
+    headers = ["x-sem-username": user.username, "x-sem-id": user.id]
 
     options = []
 
-    apply(HTTPoison, method, [url, headers, options])
+    # HTTPoison.get(url, headers, options)
+
+    IO.inspect method
+    IO.inspect [url, headers, options]
+
+    # hackney raises somthing funky with apply
+    # apply(HTTPoison, method, [url, headers, options])
+
+    case method do
+      :get ->
+        HTTPoison.get(url, headers, options)
+
+      :post ->
+        {:ok, body, conn} = Plug.Conn.read_body(conn, length: 1_000_000)
+
+        HTTPoison.post(url, body, headers, options)
+
+      _ ->
+        raise "no luck for you"
+    end
   end
 end

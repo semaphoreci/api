@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd projects_api && mix server.start & cd -
+cd gataway && mix server.start & cd -
+
+sleep 3600
