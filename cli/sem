@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+cmd = ARGV[0]
+path = ARGV[1]
+
+case cmd
+when 'create'
+  YAML.load_stream(File.read(path)) do |obj|
+    p obj['kind']
+    puts obj
+
+    endpoint = "/api/#{obj['apiVersion']}/#{obj['kind'].downcase}s"
+
+    puts endpoint
+  end
+else
+  abort 'No such command'
+end

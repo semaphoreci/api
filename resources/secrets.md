@@ -8,7 +8,7 @@
 
 ``` yaml
 apiVersion: v1
-kind: Secrets
+kind: Secret
 metadata:
   name: "dockerhub-secrets"
 data:
