@@ -1,4 +1,42 @@
-defmodule Yapi.Status do
+defmodule Yapi.Request do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+    apiVersion: String.t,
+    kind:       String.t,
+    req_id:     String.t,
+    org_id:     String.t
+  }
+  defstruct [:apiVersion, :kind, :req_id, :org_id]
+
+  field :apiVersion, 1, type: :string
+  field :kind, 2, type: :string
+  field :req_id, 3, type: :string
+  field :org_id, 4, type: :string
+end
+
+defmodule Yapi.Response do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+    apiVersion: String.t,
+    kind:       String.t,
+    req_id:     String.t,
+    org_id:     String.t,
+    status:     Yapi.Response.Status.t
+  }
+  defstruct [:apiVersion, :kind, :req_id, :org_id, :status]
+
+  field :apiVersion, 1, type: :string
+  field :kind, 2, type: :string
+  field :req_id, 3, type: :string
+  field :org_id, 4, type: :string
+  field :status, 6, type: Yapi.Response.Status
+end
+
+defmodule Yapi.Response.Status do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -8,8 +46,16 @@ defmodule Yapi.Status do
   }
   defstruct [:code, :message]
 
-  field :code, 1, type: Yapi.Code, enum: true
+  field :code, 1, type: Yapi.Response.Code, enum: true
   field :message, 2, type: :string
+end
+
+defmodule Yapi.Response.Code do
+  @moduledoc false
+  use Protobuf, enum: true, syntax: :proto3
+
+  field :OK, 0
+  field :NOT_OK, 1
 end
 
 defmodule Yapi.Secret do
@@ -54,89 +100,33 @@ defmodule Yapi.Secret.Entry do
   field :value, 2, type: :string
 end
 
-defmodule Yapi.PaginationRequest do
+defmodule Yapi.GetRequest do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    page:      integer,
-    page_size: integer
+    request: Yapi.Request.t,
+    id:      String.t,
+    name:    String.t
   }
-  defstruct [:page, :page_size]
+  defstruct [:request, :id, :name]
 
-  field :page, 1, type: :int32
-  field :page_size, 2, type: :int32
+  field :request, 1, type: Yapi.Request
+  field :id, 2, type: :string
+  field :name, 3, type: :string
 end
 
-defmodule Yapi.PaginationResponse do
+defmodule Yapi.GetResponse do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    page_number:   integer,
-    page_size:     integer,
-    total_entries: integer,
-    total_pages:   integer
+    response: Yapi.Response.t,
+    secret:   Yapi.Secret.t
   }
-  defstruct [:page_number, :page_size, :total_entries, :total_pages]
+  defstruct [:response, :secret]
 
-  field :page_number, 1, type: :int32
-  field :page_size, 2, type: :int32
-  field :total_entries, 3, type: :int32
-  field :total_pages, 4, type: :int32
-end
-
-defmodule Yapi.ListRequest do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    pagination: Yapi.PaginationRequest.t
-  }
-  defstruct [:pagination]
-
-  field :pagination, 1, type: Yapi.PaginationRequest
-end
-
-defmodule Yapi.ListResponse do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    pagination: Yapi.PaginationResponse.t,
-    secrets:    [Yapi.Secret.t]
-  }
-  defstruct [:pagination, :secrets]
-
-  field :pagination, 1, type: Yapi.PaginationResponse
-  field :secrets, 2, repeated: true, type: Yapi.Secret
-end
-
-defmodule Yapi.DescribeRequest do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    id:   String.t,
-    name: String.t
-  }
-  defstruct [:id, :name]
-
-  field :id, 1, type: :string
-  field :name, 2, type: :string
-end
-
-defmodule Yapi.DescribeResponse do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    status: Yapi.Status.t,
-    secret: Yapi.Secret.t
-  }
-  defstruct [:status, :secret]
-
-  field :status, 1, type: Yapi.Status
+  field :response, 1, type: Yapi.Response
   field :secret, 2, type: Yapi.Secret
 end
 
@@ -145,11 +135,13 @@ defmodule Yapi.CreateRequest do
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    secret: Yapi.Secret.t
+    request: Yapi.Request.t,
+    secret:  Yapi.Secret.t
   }
-  defstruct [:secret]
+  defstruct [:request, :secret]
 
-  field :secret, 1, type: Yapi.Secret
+  field :request, 1, type: Yapi.Request
+  field :secret, 2, type: Yapi.Secret
 end
 
 defmodule Yapi.CreateResponse do
@@ -157,99 +149,21 @@ defmodule Yapi.CreateResponse do
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    status: Yapi.Status.t,
-    secret: Yapi.Secret.t
+    response: Yapi.Response.t,
+    secret:   Yapi.Secret.t
   }
-  defstruct [:status, :secret]
+  defstruct [:response, :secret]
 
-  field :status, 1, type: Yapi.Status
+  field :response, 1, type: Yapi.Response
   field :secret, 2, type: Yapi.Secret
-end
-
-defmodule Yapi.UpdateRequest do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    secret: Yapi.Secret.t
-  }
-  defstruct [:secret]
-
-  field :secret, 1, type: Yapi.Secret
-end
-
-defmodule Yapi.UpdateResponse do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    status: Yapi.Status.t,
-    secret: Yapi.Secret.t
-  }
-  defstruct [:status, :secret]
-
-  field :status, 1, type: Yapi.Status
-  field :secret, 2, type: Yapi.Secret
-end
-
-defmodule Yapi.DeleteRequest do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    id:   String.t,
-    name: String.t
-  }
-  defstruct [:id, :name]
-
-  field :id, 1, type: :string
-  field :name, 2, type: :string
-end
-
-defmodule Yapi.DeleteResponse do
-  @moduledoc false
-  use Protobuf, syntax: :proto3
-
-  @type t :: %__MODULE__{
-    status: Yapi.Status.t
-  }
-  defstruct [:status]
-
-  field :status, 1, type: Yapi.Status
-end
-
-defmodule Yapi.Code do
-  @moduledoc false
-  use Protobuf, enum: true, syntax: :proto3
-
-  field :OK, 0
-  field :CANCELLED, 1
-  field :UNKNOWN, 2
-  field :INVALID_ARGUMENT, 3
-  field :DEADLINE_EXCEEDED, 4
-  field :NOT_FOUND, 5
-  field :ALREADY_EXISTS, 6
-  field :PERMISSION_DENIED, 7
-  field :UNAUTHENTICATED, 16
-  field :RESOURCE_EXHAUSTED, 8
-  field :FAILED_PRECONDITION, 9
-  field :ABORTED, 10
-  field :OUT_OF_RANGE, 11
-  field :UNIMPLEMENTED, 12
-  field :INTERNAL, 13
-  field :UNAVAILABLE, 14
-  field :DATA_LOSS, 15
 end
 
 defmodule Yapi.SecretService.Service do
   @moduledoc false
   use GRPC.Service, name: "yapi.SecretService"
 
-  rpc :List, Yapi.ListRequest, Yapi.ListResponse
-  rpc :Describe, Yapi.DescribeRequest, Yapi.DescribeResponse
+  rpc :Get, Yapi.GetRequest, Yapi.GetRequest
   rpc :Create, Yapi.CreateRequest, Yapi.CreateResponse
-  rpc :Update, Yapi.UpdateRequest, Yapi.UpdateResponse
-  rpc :Delete, Yapi.DeleteRequest, Yapi.DeleteResponse
 end
 
 defmodule Yapi.SecretService.Stub do
