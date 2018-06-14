@@ -22,8 +22,13 @@ defmodule Secrets.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      {:grpc, github: "tony612/grpc-elixir"},
+      {:protobuf, "~> 0.5.3"},
+      {:cowboy, "~> 2.2.0"},
+      {:watchman, github: "renderedtext/ex-watchman"},
+      {:timex, "~> 3.1"},
+      {:sentry, "~> 6.2.1"},
+      {:cachex, "~> 3.0"}
     ]
   end
 end
