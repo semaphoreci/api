@@ -26,7 +26,10 @@ defmodule Secrets.Mixfile do
       {:grpc, github: "tony612/grpc-elixir"},
       {:watchman, github: "renderedtext/ex-watchman"},
       {:timex, "~> 3.1"},
-      {:cachex, "~> 3.0"}
+      {:cachex, "~> 3.0"},
+      {:plug, "~> 1.5"},
+      {:poison, "~> 3.1"},
+      {:httpoison, "~> 0.11", only: [:dev, :test]}
     ]
   end
 end

@@ -4,7 +4,10 @@ defmodule Secrets.Application do
   use Application
 
   def start(_type, _args) do
+    port = Application.get_env(:secrets, :http_port)
+
     children = [
+      Plug.Adapters.Cowboy2.child_spec(scheme: :http, plug: Secrets.HttpApi, options: [port: port]),
       %{id: Cachex, start: {Cachex, :start_link, [:store, []]}}
     ]
 
