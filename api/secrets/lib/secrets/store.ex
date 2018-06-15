@@ -2,13 +2,17 @@ defmodule Secrets.Store do
   require Logger
 
   def save(secret) do
-    Cachex.put!(:store, secret.metadata.name, secret)
+    {:ok, _} = Cachex.put(:store, secret.metadata.name, secret)
 
     {:ok, secret}
   end
 
   def get(name) do
-    Cachex.get!(:store, name)
+    case Cachex.get(:store, name) do
+      {:ok, nil} -> {:error, :not_found}
+      {:ok, val} -> {:ok, val}
+      _ -> {:error, :unknown}
+    end
   end
 
   def clear! do

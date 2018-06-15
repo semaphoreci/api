@@ -1,7 +1,7 @@
 defmodule Secrets.GrpcApi.Test do
   use ExUnit.Case
 
-  alias Yapi.Secrets.{Secret, SecretService, ResponseMeta, RequestMeta, CreateRequest}
+  alias Yapi.Secrets.{Secret, SecretService, ResponseMeta, RequestMeta, CreateRequest, GetRequest}
   alias Secrets.Store
 
   @req_meta Yapi.Secrets.RequestMeta.new(
@@ -17,11 +17,35 @@ defmodule Secrets.GrpcApi.Test do
     :ok
   end
 
+  describe ".get" do
+    test "when the secret exists => it returns status ok" do
+      create()
+
+      req = GetRequest.new(metadata: @req_meta, name: "aws-secrets")
+
+      {:ok, channel} = GRPC.Stub.connect("localhost:50051")
+      {:ok, response} = SecretService.Stub.get(channel, req)
+
+      assert response.secret.metadata.name == "aws-secrets"
+    end
+
+    test "when the secret doesn't exists => it returns status not_found" do
+      req = GetRequest.new(metadata: @req_meta, name: "aws-secrets")
+
+      {:ok, channel} = GRPC.Stub.connect("localhost:50051")
+      {:ok, response} = SecretService.Stub.get(channel, req)
+
+      assert response.metadata.status.code == ResponseMeta.Code.value(:NOT_FOUND)
+    end
+  end
+
   describe ".create" do
     test "saves the secret to the store" do
       create()
 
-      assert Store.get("aws-secrets").metadata.name == "aws-secrets"
+      {:ok, secret} = Store.get("aws-secrets")
+
+      assert secret.metadata.name == "aws-secrets"
     end
 
     test "when saving succeds => it returns status OK" do

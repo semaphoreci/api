@@ -59,7 +59,8 @@ defmodule Yapi.Secrets.ResponseMeta.Code do
   use Protobuf, enum: true, syntax: :proto3
 
   field :OK, 0
-  field :NOT_OK, 1
+  field :CREATION_FAILED, 1
+  field :NOT_FOUND, 2
 end
 
 defmodule Yapi.Secrets.Secret do
@@ -166,7 +167,7 @@ defmodule Yapi.Secrets.SecretService.Service do
   @moduledoc false
   use GRPC.Service, name: "Yapi.Secrets.SecretService"
 
-  rpc :Get, Yapi.Secrets.GetRequest, Yapi.Secrets.GetRequest
+  rpc :Get, Yapi.Secrets.GetRequest, Yapi.Secrets.GetResponse
   rpc :Create, Yapi.Secrets.CreateRequest, Yapi.Secrets.CreateResponse
 end
 
