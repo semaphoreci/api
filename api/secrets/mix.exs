@@ -22,12 +22,10 @@ defmodule Secrets.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:grpc, github: "tony612/grpc-elixir"},
       {:protobuf, "~> 0.5.3"},
-      {:cowboy, "~> 2.2.0"},
+      {:grpc, github: "tony612/grpc-elixir"},
       {:watchman, github: "renderedtext/ex-watchman"},
       {:timex, "~> 3.1"},
-      {:sentry, "~> 6.2.1"},
       {:cachex, "~> 3.0"}
     ]
   end

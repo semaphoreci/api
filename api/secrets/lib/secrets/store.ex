@@ -1,24 +1,18 @@
 defmodule Secrets.Store do
   require Logger
 
-  def list(page: page, page_size: page_size) do
+  def save(secret) do
+    Cachex.put!(:store, secret.metadata.name, secret)
 
+    {:ok, secret}
   end
 
-  def get(secret) do
-
+  def get(name) do
+    Cachex.get!(:store, name)
   end
 
-  def create() do
-
-  end
-
-  def update() do
-
-  end
-
-  def delete() do
-
+  def clear! do
+    Cachex.clear!(:store)
   end
 
 end

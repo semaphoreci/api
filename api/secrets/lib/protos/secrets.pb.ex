@@ -1,42 +1,46 @@
-defmodule Yapi.Request do
+defmodule Yapi.Secrets.RequestMeta do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    apiVersion: String.t,
-    kind:       String.t,
-    req_id:     String.t,
-    org_id:     String.t
+    api_version: String.t,
+    kind:        String.t,
+    req_id:      String.t,
+    org_id:      String.t,
+    user_id:     String.t
   }
-  defstruct [:apiVersion, :kind, :req_id, :org_id]
+  defstruct [:api_version, :kind, :req_id, :org_id, :user_id]
 
-  field :apiVersion, 1, type: :string
+  field :api_version, 1, type: :string
   field :kind, 2, type: :string
   field :req_id, 3, type: :string
   field :org_id, 4, type: :string
+  field :user_id, 5, type: :string
 end
 
-defmodule Yapi.Response do
+defmodule Yapi.Secrets.ResponseMeta do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    apiVersion: String.t,
-    kind:       String.t,
-    req_id:     String.t,
-    org_id:     String.t,
-    status:     Yapi.Response.Status.t
+    api_version: String.t,
+    kind:        String.t,
+    req_id:      String.t,
+    org_id:      String.t,
+    user_id:     String.t,
+    status:      Yapi.Secrets.ResponseMeta.Status.t
   }
-  defstruct [:apiVersion, :kind, :req_id, :org_id, :status]
+  defstruct [:api_version, :kind, :req_id, :org_id, :user_id, :status]
 
-  field :apiVersion, 1, type: :string
+  field :api_version, 1, type: :string
   field :kind, 2, type: :string
   field :req_id, 3, type: :string
   field :org_id, 4, type: :string
-  field :status, 6, type: Yapi.Response.Status
+  field :user_id, 5, type: :string
+  field :status, 6, type: Yapi.Secrets.ResponseMeta.Status
 end
 
-defmodule Yapi.Response.Status do
+defmodule Yapi.Secrets.ResponseMeta.Status do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -46,11 +50,11 @@ defmodule Yapi.Response.Status do
   }
   defstruct [:code, :message]
 
-  field :code, 1, type: Yapi.Response.Code, enum: true
+  field :code, 1, type: Yapi.Secrets.ResponseMeta.Code, enum: true
   field :message, 2, type: :string
 end
 
-defmodule Yapi.Response.Code do
+defmodule Yapi.Secrets.ResponseMeta.Code do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -58,21 +62,21 @@ defmodule Yapi.Response.Code do
   field :NOT_OK, 1
 end
 
-defmodule Yapi.Secret do
+defmodule Yapi.Secrets.Secret do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    metadata: Yapi.Secret.Metadata.t,
-    data:     [Yapi.Secret.Entry.t]
+    metadata: Yapi.Secrets.Secret.Metadata.t,
+    data:     [Yapi.Secrets.Secret.Entry.t]
   }
   defstruct [:metadata, :data]
 
-  field :metadata, 1, type: Yapi.Secret.Metadata
-  field :data, 2, repeated: true, type: Yapi.Secret.Entry
+  field :metadata, 1, type: Yapi.Secrets.Secret.Metadata
+  field :data, 2, repeated: true, type: Yapi.Secrets.Secret.Entry
 end
 
-defmodule Yapi.Secret.Metadata do
+defmodule Yapi.Secrets.Secret.Metadata do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -86,7 +90,7 @@ defmodule Yapi.Secret.Metadata do
   field :id, 2, type: :string
 end
 
-defmodule Yapi.Secret.Entry do
+defmodule Yapi.Secrets.Secret.Entry do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -100,74 +104,74 @@ defmodule Yapi.Secret.Entry do
   field :value, 2, type: :string
 end
 
-defmodule Yapi.GetRequest do
+defmodule Yapi.Secrets.GetRequest do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    request: Yapi.Request.t,
-    id:      String.t,
-    name:    String.t
+    metadata: Yapi.Secrets.RequestMeta.t,
+    id:       String.t,
+    name:     String.t
   }
-  defstruct [:request, :id, :name]
+  defstruct [:metadata, :id, :name]
 
-  field :request, 1, type: Yapi.Request
+  field :metadata, 1, type: Yapi.Secrets.RequestMeta
   field :id, 2, type: :string
   field :name, 3, type: :string
 end
 
-defmodule Yapi.GetResponse do
+defmodule Yapi.Secrets.GetResponse do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    response: Yapi.Response.t,
-    secret:   Yapi.Secret.t
+    metadata: Yapi.Secrets.ResponseMeta.t,
+    secret:   Yapi.Secrets.Secret.t
   }
-  defstruct [:response, :secret]
+  defstruct [:metadata, :secret]
 
-  field :response, 1, type: Yapi.Response
-  field :secret, 2, type: Yapi.Secret
+  field :metadata, 1, type: Yapi.Secrets.ResponseMeta
+  field :secret, 2, type: Yapi.Secrets.Secret
 end
 
-defmodule Yapi.CreateRequest do
+defmodule Yapi.Secrets.CreateRequest do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    request: Yapi.Request.t,
-    secret:  Yapi.Secret.t
+    metadata: Yapi.Secrets.RequestMeta.t,
+    secret:   Yapi.Secrets.Secret.t
   }
-  defstruct [:request, :secret]
+  defstruct [:metadata, :secret]
 
-  field :request, 1, type: Yapi.Request
-  field :secret, 2, type: Yapi.Secret
+  field :metadata, 1, type: Yapi.Secrets.RequestMeta
+  field :secret, 2, type: Yapi.Secrets.Secret
 end
 
-defmodule Yapi.CreateResponse do
+defmodule Yapi.Secrets.CreateResponse do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-    response: Yapi.Response.t,
-    secret:   Yapi.Secret.t
+    metadata: Yapi.Secrets.ResponseMeta.t,
+    secret:   Yapi.Secrets.Secret.t
   }
-  defstruct [:response, :secret]
+  defstruct [:metadata, :secret]
 
-  field :response, 1, type: Yapi.Response
-  field :secret, 2, type: Yapi.Secret
+  field :metadata, 1, type: Yapi.Secrets.ResponseMeta
+  field :secret, 2, type: Yapi.Secrets.Secret
 end
 
-defmodule Yapi.SecretService.Service do
+defmodule Yapi.Secrets.SecretService.Service do
   @moduledoc false
-  use GRPC.Service, name: "yapi.SecretService"
+  use GRPC.Service, name: "Yapi.Secrets.SecretService"
 
-  rpc :Get, Yapi.GetRequest, Yapi.GetRequest
-  rpc :Create, Yapi.CreateRequest, Yapi.CreateResponse
+  rpc :Get, Yapi.Secrets.GetRequest, Yapi.Secrets.GetRequest
+  rpc :Create, Yapi.Secrets.CreateRequest, Yapi.Secrets.CreateResponse
 end
 
-defmodule Yapi.SecretService.Stub do
+defmodule Yapi.Secrets.SecretService.Stub do
   @moduledoc false
-  use GRPC.Stub, service: Yapi.SecretService.Service
+  use GRPC.Stub, service: Yapi.Secrets.SecretService.Service
 end
 
