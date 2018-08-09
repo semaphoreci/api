@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/api/annotations.proto";
+
 package semaphore.workflows.v1alpha;
 
 service WorkflowApi {
@@ -7,7 +9,12 @@ service WorkflowApi {
   // Operation is called to describe an existing workflow.
   // Operation is synchronous.
   //
-  rpc Get(GetRequest) returns (GetResponse);
+  rpc Get(GetRequest) returns (GetResponse) {
+    option (google.api.http) = {
+      post: "/api/v1alpha/workflows/{workflow_id}"
+      body: "*"
+    };
+  }
 }
 
 message Workflow {
