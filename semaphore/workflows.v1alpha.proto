@@ -11,8 +11,7 @@ service WorkflowApi {
   //
   rpc Get(GetRequest) returns (GetResponse) {
     option (google.api.http) = {
-      post: "/api/v1alpha/workflows/{workflow_id}"
-      body: "*"
+      get: "/api/v1alpha/workflows/{workflow_id}"
     };
   }
 }
