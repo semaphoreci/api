@@ -32,8 +32,7 @@ message Workflow {
     string author_name = 3;
     string author_email = 4;
     string author_avatar_url = 7;
-    string branch_name = 5;
-    string repo_url = 6;
+    string repo_url = 8;
   }
 
   string id = 1;               // [required] ID of the workflow
