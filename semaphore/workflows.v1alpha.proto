@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package semaphore.workflows.v1alpha;
+
+service WorkflowApi {
+  //
+  // Operation is called to describe an existing workflow.
+  // Operation is synchronous.
+  //
+  rpc Get(GetRequest) returns (GetResponse) {
+    option (google.api.http) = {
+      post: "/api/v1alpha/workflows/{workflow_id}"
+      body: "*"
+    };
+  }
+}
+
+message Workflow {
+  message Trigger {
+    enum Type {
+      GIT_PUSH = 0;
+    }
+
+    Type type = 1;
+  }
+
+  message Commit {
+    string sha = 1;
+    string message = 2;
+    string author_name = 3;
+    string author_email = 4;
+    string author_avatar_url = 7;
+    string repo_url = 8;
+  }
+
+  string id = 1;               // [required] ID of the workflow
+  string name = 2;             // [required] Name of the workflow
+  string project_id = 3;       // [required] The ID of a project for this workflow.
+  string pipeline_id = 4;      // [required] The ID of a root pipeline for this workflow.
+
+  Commit commit = 5;           // [required] Commit on which this workload is based on.
+  Trigger trigger = 6;         // [required] The trigger that created this workflow.
+}
+
+message GetRequest {
+  string workflow_id = 1;
+}
+
+message GetResponse {
+  Workflow workflow = 1;
+}
