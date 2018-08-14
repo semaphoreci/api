@@ -7,7 +7,7 @@ service WorkflowApi {
   // Operation is called to describe an existing workflow.
   // Operation is synchronous.
   //
-  rpc Get(GetRequest) returns (GetResponse);
+  rpc GetWorkflow(GetWorkflowRequest) returns (Workflow);
 }
 
 message Workflow {
@@ -37,10 +37,6 @@ message Workflow {
   Trigger trigger = 6;         // [required] The trigger that created this workflow.
 }
 
-message GetRequest {
+message GetWorkflowRequest {
   string workflow_id = 1;
-}
-
-message GetResponse {
-  Workflow workflow = 1;
 }
