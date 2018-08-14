@@ -54,9 +54,9 @@ message Workflow {
     }
 
     enum State {
-      PENDING = 0;         // Workflow is saved, but no pipeline was triggered yet.
-      COMMIT_LOOKUP = 1;   // Commit information lookup and verifying existance in repository.
-      DONE = 2;            // Workflow processing is finished, no further modification should occur.
+      PENDING = 0;      // Workflow is saved, but no pipeline was triggered yet.
+      SCHEDULING = 1;   // Commit information lookup and verification of existance in repository is done. Triggering pipeline.
+      DONE = 2;         // Workflow processing is finished, no further modification should occur.
     }
 
     enum Result {
@@ -68,6 +68,7 @@ message Workflow {
     State state = 2;                  // [required] State of processing
     Result result = 3;                // [required if state is DONE]
     string result_reason = 4;         // [optional] Exaplains the reason for the result
+    Commit commit = 5;                // [required if state is SCHEDULING]
   }
 
   Metadata metadata = 1;
