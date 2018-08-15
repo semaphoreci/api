@@ -11,30 +11,69 @@ service WorkflowApi {
 }
 
 message Workflow {
-  message Trigger {
-    enum Type {
-      GIT_PUSH = 0;
+  message Metadata {
+    string id = 1;               // [required] ID of the workflow
+    string name = 2;             // [required] Name of the workflow
+  }
+
+  message Spec {
+    // The requester can fill one or many reference points, and the system will
+    // do its best to find the commit sha.
+    //
+    // If only branch_name is filled, the system will trigger a workflow based
+    // on the current head of the branch.
+    //
+    // If pull_request_number is filled in, the system will trigger a workflow
+    // based on the current head of the pull request.
+    //
+    // If both commit_sha and branch are passed, the system will check out the
+    // source code based on the passed info.
+    //
+    // If nothing is passed, the system will set the Workflow processing result
+    // to failed and set the reason to, commit could not be found.
+    message GitReference {
+      string commit_sha = 1;
+      string branch_name = 2;
+      string pull_request_number = 3;
+      string git_tag = 4;
     }
 
-    Type type = 1;
+    string project_id = 1;           // [required] The ID of a project for this workflow.
+    GitReference git_reference = 2;  // [required] The git reference based on which this
+    string creator_id = 3;           // [optional] If the workflow was manually created, this is the ID of the user
   }
 
-  message Commit {
-    string sha = 1;
-    string message = 2;
-    string author_name = 3;
-    string author_email = 4;
-    string author_avatar_url = 7;
-    string repo_url = 8;
+  message Status {
+    message Commit {
+      string sha = 1;
+      string message = 2;
+      string author_name = 3;
+      string author_email = 4;
+      string author_avatar_url = 5;
+      string repo_url = 6;
+    }
+
+    enum State {
+      PENDING = 0;      // Workflow is saved, but no pipeline was triggered yet.
+      SCHEDULING = 1;   // Commit information lookup and verification of existance in repository is done. Triggering pipeline.
+      DONE = 2;         // Workflow processing is finished, no further modification should occur.
+    }
+
+    enum Result {
+      FAILED = 0;          // Failed to process workflow, example: commit does not exist.
+      PASSED = 1;          // Succesfully processed workflow, root_pipeline_id is present.
+    }
+
+    string root_pipeline_id = 1;      // [required if present] The ID of a root pipeline for this workflow.
+    State state = 2;                  // [required] State of processing
+    Result result = 3;                // [required if state is DONE]
+    string result_reason = 4;         // [optional] Exaplains the reason for the result
+    Commit commit = 5;                // [required if state is SCHEDULING]
   }
 
-  string id = 1;               // [required] ID of the workflow
-  string name = 2;             // [required] Name of the workflow
-  string project_id = 3;       // [required] The ID of a project for this workflow.
-  string pipeline_id = 4;      // [required] The ID of a root pipeline for this workflow.
-
-  Commit commit = 5;           // [required] Commit on which this workload is based on.
-  Trigger trigger = 6;         // [required] The trigger that created this workflow.
+  Metadata metadata = 1;
+  Spec spec = 2;
+  Status status = 3;
 }
 
 message GetWorkflowRequest {
