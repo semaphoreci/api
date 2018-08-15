@@ -56,3 +56,11 @@ Every API version can be alpha, beta, and stable.
 
 - Stable versions: Are subject to no modifications, only security patches.
   Naming pattern `<version>`, example `v1`.
+  
+### Resource objects
+
+Resource objects have 3 components:
+
+- ResourceSpec: This is defined by the user and describes the desired state of system. Fill this in when creating or updating an object.
+- ResourceStatus: This is filled in by the server and reports the current state of the system. Only kubernetes components should fill this in
+- Resource ObjectMeta: This is metadata about the resource, such as its name, type, api version, annotations, and labels. This contains fields that maybe updated both by the end user and the system (e.g. annotations)
