@@ -38,9 +38,9 @@ message Workflow {
       string git_tag = 4;
     }
 
-    string project_id = 1;       // [required] The ID of a project for this workflow.
-    GitReference ref = 2;        // [required] The git reference based on which this
-    string creator_id = 3;       // [optional] If the workflow was manually created, this is the ID of the user
+    string project_id = 1;           // [required] The ID of a project for this workflow.
+    GitReference git_reference = 2;  // [required] The git reference based on which this
+    string creator_id = 3;           // [optional] If the workflow was manually created, this is the ID of the user
   }
 
   message Status {
