@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package semaphore.api;
+
+// Used to return an empty response
+message Empty {}
