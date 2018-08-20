@@ -5,3 +5,5 @@ http:
   rules:
   - selector: semaphore.workflows.v1alpha.WorkflowApi.GetWorkflow
     get: /api/v1alpha/workflows/{workflow_id}
+  - selector: semaphore.workflows.v1alpha.WorkflowApi.ListWorkflows
+    get: /api/v1alpha/workflows
