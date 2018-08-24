@@ -65,4 +65,4 @@ Resource objects have 3 components:
 - `status` - This is filled in by the server and reports the current state of the system. Only semaphore components should fill this in.
 - `metadata` - This is metadata about the resource, such as its name, type, api version, annotations, and labels. This contains fields that maybe updated both by the end user and the system (e.g. annotations)
 
-All objects that represent a physical resource whose state may vary from the user's desired intent **should** have a `spec` and a `status`. Objects whose state cannot vary from the user's desired intent **may** have only `spec`, and **may** rename `spec` to a more appropriate name. Example: [secrets.v1alpha.proto](https://github.com/semaphoreci/api/blob/master/semaphore/secrets.v1alpha.proto)
+All objects that represent a physical resource whose state may vary from the user's desired intent **should** have a `spec` and a `status`. Objects whose state cannot vary from the user's desired intent **may** have only `spec`, and **may** rename `spec` to a more appropriate name. Example: [secrets.v1beta.proto](https://github.com/semaphoreci/api/blob/master/semaphore/secrets.v1beta.proto)
