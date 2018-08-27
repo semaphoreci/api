@@ -19,7 +19,7 @@ message Dasboard {
     message Widget {
       enum Type {
         LIST = 1;
-        CHART = 2;
+        CHART_DURATION = 2;
       }
 
       string name = 1;
