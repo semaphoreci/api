@@ -1,0 +1,18 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.ListDashboards
+    get: /api/v1alpha/dashboards
+
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.GetDasboard
+    get: /api/v1alpha/dashboards/{id_or_name}
+
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.CreateDasboard
+    post: /api/v1alpha/dashboards
+    body: "*"
+
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.DeleteDasboard
+    delete: /api/v1alpha/dashboards/{id_or_name}
