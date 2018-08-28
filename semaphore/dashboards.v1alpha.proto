@@ -3,13 +3,13 @@ syntax = "proto3";
 package semaphore.dashboards.v1alpha;
 
 service DashboardsApi {
-  rpc ListDasboards(ListDasboardsRequest) returns (ListDasboardsResponse);
-  rpc GetDasboard(GetDasboardRequest) returns (Dasboard);
-  rpc CreateDasboard(Dasboard) returns (Dasboard);
-  rpc DeleteDasboard(DeleteDasboardRequest) returns (Empty);
+  rpc ListDashboards(ListDashboardsRequest) returns (ListDashboardsResponse);
+  rpc GetDashboard(GetDashboardRequest) returns (Dashboard);
+  rpc CreateDashboard(Dashboard) returns (Dashboard);
+  rpc DeleteDashboard(DeleteDashboardRequest) returns (Empty);
 }
 
-message Dasboard {
+message Dashboard {
   message Metadata {
     string name = 1;
     string id = 2;
@@ -29,23 +29,23 @@ message Dasboard {
   Spec spec = 2;
 }
 
-message ListDasboardsRequest {
+message ListDashboardsRequest {
   int32 page_size = 1;
   string page_token = 2;
 }
 
-message ListDasboardsResponse {
-  repeated Dasboard dasboards = 1;
+message ListDashboardsResponse {
+  repeated Dashboard dashboards = 1;
 
   string next_page_token = 2;
   int32 total_size = 3;
 }
 
-message GetDasboardRequest {
+message GetDashboardRequest {
   string id_or_name = 1;
 }
 
-message DeleteDasboardRequest {
+message DeleteDashboardRequest {
   string id_or_name = 1;
 }
 
