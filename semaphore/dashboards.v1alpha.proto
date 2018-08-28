@@ -22,7 +22,6 @@ message Dasboard {
       map<string, string> filters = 3;
     }
 
-    bool private = 1;
     Widget widgets = 2;
   }
 
