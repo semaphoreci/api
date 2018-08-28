@@ -22,7 +22,7 @@ message Dasboard {
       map<string, string> filters = 3;
     }
 
-    Widget widgets = 2;
+    repeated Widget widgets = 2;
   }
 
   Metadata metadata = 1;
