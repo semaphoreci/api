@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package semaphore.dashboards.v1alpha;
+
+service DashboardsApi {
+  rpc ListDashboards(ListDashboardsRequest) returns (ListDashboardsResponse);
+  rpc GetDashboard(GetDashboardRequest) returns (Dashboard);
+  rpc CreateDashboard(Dashboard) returns (Dashboard);
+  rpc DeleteDashboard(DeleteDashboardRequest) returns (Empty);
+}
+
+message Dashboard {
+  message Metadata {
+    string name = 1;
+    string id = 2;
+  }
+
+  message Spec {
+    message Widget {
+      string name = 1;
+      string type = 2;
+      map<string, string> filters = 3;
+    }
+
+    repeated Widget widgets = 2;
+  }
+
+  Metadata metadata = 1;
+  Spec spec = 2;
+}
+
+message ListDashboardsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListDashboardsResponse {
+  repeated Dashboard dashboards = 1;
+
+  string next_page_token = 2;
+  int32 total_size = 3;
+}
+
+message GetDashboardRequest {
+  string id_or_name = 1;
+}
+
+message DeleteDashboardRequest {
+  string id_or_name = 1;
+}
+
+message Empty {}
