@@ -7,12 +7,12 @@ http:
   - selector: semaphore.dashboards.v1alpha.DashboardsApi.ListDashboards
     get: /api/v1alpha/dashboards
 
-  - selector: semaphore.dashboards.v1alpha.DashboardsApi.GetDasboard
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.GetDashboard
     get: /api/v1alpha/dashboards/{id_or_name}
 
-  - selector: semaphore.dashboards.v1alpha.DashboardsApi.CreateDasboard
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.CreateDashboard
     post: /api/v1alpha/dashboards
     body: "*"
 
-  - selector: semaphore.dashboards.v1alpha.DashboardsApi.DeleteDasboard
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.DeleteDashboard
     delete: /api/v1alpha/dashboards/{id_or_name}
