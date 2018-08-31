@@ -101,6 +101,17 @@ message ListWorkflowsRequest {
 
   int32 page_size = 3;
   string page_token = 4;
+
+  // Each Workflow is labeled with arbitrary key/value pairs
+  // which can be used to filter and select them while listing.
+  //
+  // Example label:
+  //   - author_email: igor@renderedtext.com
+  //
+  // If multiple labels are passed, the are combined with an AND operator.
+  // In other words, only those workflows are returned that have all the labels
+  // attached.
+  map<string, string> labels = 5; // [optional] key/value pairs of labels to filter with
 }
 
 message ListWorkflowsResponse {
