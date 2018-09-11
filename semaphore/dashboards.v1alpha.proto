@@ -13,6 +13,8 @@ message Dashboard {
   message Metadata {
     string name = 1;
     string id = 2;
+    int64 create_time = 3;
+    int64 update_time = 4;
   }
 
   message Spec {
