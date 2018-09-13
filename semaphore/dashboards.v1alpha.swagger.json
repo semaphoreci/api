@@ -1,0 +1,193 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "semaphore/dashboards.v1alpha.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1alpha/dashboards": {
+      "get": {
+        "operationId": "ListDashboards",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1alphaListDashboardsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DashboardsApi"
+        ]
+      },
+      "post": {
+        "operationId": "CreateDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1alphaDashboard"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1alphaDashboard"
+            }
+          }
+        ],
+        "tags": [
+          "DashboardsApi"
+        ]
+      }
+    },
+    "/api/v1alpha/dashboards/{id_or_name}": {
+      "get": {
+        "operationId": "GetDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1alphaDashboard"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id_or_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DashboardsApi"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1alphaEmpty"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id_or_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DashboardsApi"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "DashboardMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "DashboardSpec": {
+      "type": "object",
+      "properties": {
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SpecWidget"
+          }
+        }
+      }
+    },
+    "SpecWidget": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "filters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1alphaDashboard": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/DashboardMetadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/DashboardSpec"
+        }
+      }
+    },
+    "v1alphaEmpty": {
+      "type": "object"
+    },
+    "v1alphaListDashboardsResponse": {
+      "type": "object",
+      "properties": {
+        "dashboards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1alphaDashboard"
+          }
+        },
+        "next_page_token": {
+          "type": "string"
+        },
+        "total_size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
