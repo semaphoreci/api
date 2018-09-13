@@ -22,7 +22,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/v1alphaListDashboardsResponse"
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaListDashboardsResponse"
             }
           }
         },
@@ -51,7 +51,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/v1alphaDashboard"
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
             }
           }
         },
@@ -61,7 +61,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1alphaDashboard"
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
             }
           }
         ],
@@ -77,7 +77,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/v1alphaDashboard"
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
             }
           }
         },
@@ -99,7 +99,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/v1alphaEmpty"
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaEmpty"
             }
           }
         },
@@ -118,7 +118,18 @@
     }
   },
   "definitions": {
-    "DashboardMetadata": {
+    "SemaphoreDashboardsV1alphaDashboard": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboardMetadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboardSpec"
+        }
+      }
+    },
+    "SemaphoreDashboardsV1alphaDashboardMetadata": {
       "type": "object",
       "properties": {
         "name": {
@@ -129,18 +140,18 @@
         }
       }
     },
-    "DashboardSpec": {
+    "SemaphoreDashboardsV1alphaDashboardSpec": {
       "type": "object",
       "properties": {
         "widgets": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SpecWidget"
+            "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboardSpecWidget"
           }
         }
       }
     },
-    "SpecWidget": {
+    "SemaphoreDashboardsV1alphaDashboardSpecWidget": {
       "type": "object",
       "properties": {
         "name": {
@@ -157,27 +168,16 @@
         }
       }
     },
-    "v1alphaDashboard": {
-      "type": "object",
-      "properties": {
-        "metadata": {
-          "$ref": "#/definitions/DashboardMetadata"
-        },
-        "spec": {
-          "$ref": "#/definitions/DashboardSpec"
-        }
-      }
-    },
-    "v1alphaEmpty": {
+    "SemaphoreDashboardsV1alphaEmpty": {
       "type": "object"
     },
-    "v1alphaListDashboardsResponse": {
+    "SemaphoreDashboardsV1alphaListDashboardsResponse": {
       "type": "object",
       "properties": {
         "dashboards": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1alphaDashboard"
+            "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
           }
         },
         "next_page_token": {
