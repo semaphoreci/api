@@ -114,6 +114,36 @@
         "tags": [
           "SemaphoreDashboardsV1alphaDashboardsApi"
         ]
+      },
+      "patch": {
+        "operationId": "UpdateDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id_or_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        ],
+        "tags": [
+          "SemaphoreDashboardsV1alphaDashboardsApi"
+        ]
       }
     }
   },
@@ -137,6 +167,17 @@
         },
         "id": {
           "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "update_time": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
