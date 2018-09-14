@@ -6,6 +6,7 @@ service DashboardsApi {
   rpc ListDashboards(ListDashboardsRequest) returns (ListDashboardsResponse);
   rpc GetDashboard(GetDashboardRequest) returns (Dashboard);
   rpc CreateDashboard(Dashboard) returns (Dashboard);
+  rpc UpdateDashboard(UpdateDashboardRequest) returns (Dashboard);
   rpc DeleteDashboard(DeleteDashboardRequest) returns (Empty);
 }
 
@@ -47,6 +48,12 @@ message ListDashboardsResponse {
 
 message GetDashboardRequest {
   string id_or_name = 1;
+}
+
+message UpdateDashboardRequest {
+  string id_or_name = 1;
+
+  Dashboard dashboard = 2;
 }
 
 message DeleteDashboardRequest {
