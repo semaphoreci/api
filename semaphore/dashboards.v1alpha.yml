@@ -14,5 +14,9 @@ http:
     post: /api/v1alpha/dashboards
     body: "*"
 
+  - selector: semaphore.dashboards.v1alpha.DashboardsApi.UpdateDashboard
+    patch: /api/v1alpha/dashboards/{id_or_name}
+    body: "dashboard"
+
   - selector: semaphore.dashboards.v1alpha.DashboardsApi.DeleteDashboard
     delete: /api/v1alpha/dashboards/{id_or_name}
