@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package semaphore.jobs.v1alpha;
+
+service JobsApi {
+  rpc ListJobs(ListJobsRequest) returns (ListJobsResponse);
+  rpc GetJob(GetJobRequest) returns (Job);
+  rpc CreateJob(Job) returns (Job);
+}
+
+message Job {
+  message Metadata {
+    string name = 1;
+    string id = 2;
+
+    int64 create_time = 3; // unix timestamp of job creation
+    int64 update_time = 4; // unix timestamp of last update
+    int64 start_time = 5; // unix timestamp of last update
+    int64 finish_time = 6; // unix timestamp of last update
+  }
+
+  message Spec {
+    message Agent {
+      message Machine {
+        string type = 1;
+        string os_image = 2;
+      }
+
+      Machine = 1;
+    }
+
+    message Secrets {
+      string name = 1;
+    }
+
+    message EnvVar {
+      string name = 1;
+      string value = 2;
+    }
+
+    message File {
+      string path = 1;
+      string content = 2;
+    }
+
+    string project_id = 1;
+    Agent agent = 2;
+
+    repeated EnvVar env_vars = 3;
+    repeated Files files = 4;
+
+    repeated string commands = 5;
+    repeated string epilogue_commands = 6;
+  }
+
+  message Status {
+    enum Result {
+      NONE = 1;
+      PASSED = 2;
+      FAILED = 3;
+      STOPPED = 3;
+    }
+
+    enum State {
+      PENDING = 1;
+      ENQUEUED = 2;
+      SCHEDULED = 3;
+      DISPATCHED = 4;
+      RUNNING = 5;
+      FINISHED = 6;
+    }
+
+    message Agent {
+      message Port {
+        string name = 1;
+        int32 number = 2;
+      }
+
+      string ip = 1;
+      repeated Port ports = 2;
+    }
+
+    Result result = 1;
+    State state = 2;
+    Agent agent = 3;
+  }
+
+  Metadata metadata = 1;
+  Spec spec = 2;
+  Status status = 3;
+}
+
+message ListJobsRequest {
+  enum Order {
+    BY_CREATE_TIME_DESC = 1;
+  }
+
+  int32 page_size = 1;
+  string page_token = 2;
+  Order order = 3;
+}
+
+message ListJobsResponse {
+  repeated Secret secrets = 1;
+
+  string next_page_token = 2;
+}
+
+message GetJobRequest {
+  string job_id = 1;
+}
