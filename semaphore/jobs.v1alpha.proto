@@ -56,19 +56,19 @@ message Job {
 
   message Status {
     enum Result {
-      NONE = 1;
-      PASSED = 2;
-      FAILED = 3;
+      NONE = 0;
+      PASSED = 1;
+      FAILED = 2;
       STOPPED = 3;
     }
 
     enum State {
-      PENDING = 1;
-      ENQUEUED = 2;
-      SCHEDULED = 3;
-      DISPATCHED = 4;
-      RUNNING = 5;
-      FINISHED = 6;
+      PENDING = 0;
+      ENQUEUED = 1;
+      SCHEDULED = 2;
+      DISPATCHED = 3;
+      RUNNING = 4;
+      FINISHED = 5;
     }
 
     message Agent {
@@ -93,12 +93,23 @@ message Job {
 
 message ListJobsRequest {
   enum Order {
-    BY_CREATE_TIME_DESC = 1;
+    BY_CREATE_TIME_DESC = 0;
+  }
+
+  enum State {
+    PENDING = 0;
+    ENQUEUED = 1;
+    SCHEDULED = 2;
+    DISPATCHED = 3;
+    RUNNING = 4;
+    FINISHED = 5;
   }
 
   int32 page_size = 1;
   string page_token = 2;
   Order order = 3;
+
+  repeated State states = 4;
 }
 
 message ListJobsResponse {
