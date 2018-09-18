@@ -26,10 +26,10 @@ message Job {
         string os_image = 2;
       }
 
-      Machine = 1;
+      Machine machine = 1;
     }
 
-    message Secrets {
+    message Secret {
       string name = 1;
     }
 
@@ -46,11 +46,12 @@ message Job {
     string project_id = 1;
     Agent agent = 2;
 
-    repeated EnvVar env_vars = 3;
-    repeated Files files = 4;
+    repeated Secret secrets = 3;
+    repeated EnvVar env_vars = 4;
+    repeated File files = 5;
 
-    repeated string commands = 5;
-    repeated string epilogue_commands = 6;
+    repeated string commands = 6;
+    repeated string epilogue_commands = 7;
   }
 
   message Status {
@@ -101,7 +102,7 @@ message ListJobsRequest {
 }
 
 message ListJobsResponse {
-  repeated Secret secrets = 1;
+  repeated Job jobs = 1;
 
   string next_page_token = 2;
 }
