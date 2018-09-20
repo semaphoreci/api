@@ -1,0 +1,234 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "semaphore/dashboards.v1alpha.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1alpha/dashboards": {
+      "get": {
+        "operationId": "ListDashboards",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaListDashboardsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SemaphoreDashboardsV1alphaDashboardsApi"
+        ]
+      },
+      "post": {
+        "operationId": "CreateDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        ],
+        "tags": [
+          "SemaphoreDashboardsV1alphaDashboardsApi"
+        ]
+      }
+    },
+    "/api/v1alpha/dashboards/{id_or_name}": {
+      "get": {
+        "operationId": "GetDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id_or_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SemaphoreDashboardsV1alphaDashboardsApi"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaEmpty"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id_or_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SemaphoreDashboardsV1alphaDashboardsApi"
+        ]
+      },
+      "patch": {
+        "operationId": "UpdateDashboard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id_or_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+            }
+          }
+        ],
+        "tags": [
+          "SemaphoreDashboardsV1alphaDashboardsApi"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SemaphoreDashboardsV1alphaDashboard": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboardMetadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboardSpec"
+        }
+      }
+    },
+    "SemaphoreDashboardsV1alphaDashboardMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "update_time": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "SemaphoreDashboardsV1alphaDashboardSpec": {
+      "type": "object",
+      "properties": {
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboardSpecWidget"
+          }
+        }
+      }
+    },
+    "SemaphoreDashboardsV1alphaDashboardSpecWidget": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "filters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SemaphoreDashboardsV1alphaEmpty": {
+      "type": "object"
+    },
+    "SemaphoreDashboardsV1alphaListDashboardsResponse": {
+      "type": "object",
+      "properties": {
+        "dashboards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SemaphoreDashboardsV1alphaDashboard"
+          }
+        },
+        "next_page_token": {
+          "type": "string"
+        },
+        "total_size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
