@@ -95,10 +95,11 @@ message ListJobsRequest {
     BY_CREATE_TIME_DESC = 0;
   }
 
-  string page_token = 1;
-  Order order = 2;
+  int32 page_size = 1;
+  string page_token = 2;
+  Order order = 3;
 
-  repeated Job.Status.State states = 3;
+  repeated Job.Status.State states = 4;
 }
 
 message ListJobsResponse {
