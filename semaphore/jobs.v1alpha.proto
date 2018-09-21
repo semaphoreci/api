@@ -56,19 +56,18 @@ message Job {
 
   message Status {
     enum Result {
-      NONE = 0;
-      PASSED = 1;
-      FAILED = 2;
-      STOPPED = 3;
+      NONE = 0;    // Job has not yet finished.
+      PASSED = 1;  // Succesfully finished job.
+      FAILED = 2;  // Job has failed, either because a command has failed, 
+                   // or because dependancies are not available (i.e. secrets).
+      STOPPED = 3; // Job was terminated before finishing.
     }
 
     enum State {
-      PENDING = 0;
-      ENQUEUED = 1;
-      SCHEDULED = 2;
-      DISPATCHED = 3;
-      RUNNING = 4;
-      FINISHED = 5;
+      PENDING = 0;  // Job is accepted by the Semaphore system.
+      QUEUED = 1;   // Job is waiting for available capacity.
+      RUNNING = 2;  // Job is processing commands.
+      FINISHED = 3; // Job processing has finished, result has been calculated.
     }
 
     message Agent {
