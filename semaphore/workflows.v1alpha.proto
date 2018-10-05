@@ -118,5 +118,4 @@ message ListWorkflowsResponse {
   repeated Workflow workflows = 1;
 
   string next_page_token = 2;
-  int32 total_size = 3;
 }
