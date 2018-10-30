@@ -3,7 +3,7 @@ syntax = "proto3";
 package semaphore.notifications.v1alpha;
 
 service NotificationsApi {
-  rpc ListNotifications(ListNotificatiosRequest) returns (ListNotificationsResponse);
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
   rpc GetNotification(GetNotificationRequest) returns (Notification);
   rpc CreateNotification(Notification) returns (Notification);
   rpc UpdateNotification(UpdateNotificationRequest) returns (Notification);
@@ -23,14 +23,14 @@ message Notification {
     message Rule {
       message Filter {
         enum State {
-          STARTED = 1;
-          FINISHED = 2;
+          STARTED = 0;
+          FINISHED = 1;
         }
 
         enum Result {
-          PASSED = 1;
-          FAILED = 2;
-          STOPPED = 3;
+          PASSED = 0;
+          FAILED = 1;
+          STOPPED = 2;
         }
 
         // List of projects to trigger this rule.
