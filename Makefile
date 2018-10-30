@@ -7,7 +7,4 @@ install:
 
 test:
 	mkdir -p /tmp/protoc-test-out
-	for p in $(shell ls semaphore/*.proto); do protoc --go_out=/tmp/protoc-test-out $$p; done
-
-clean:
-	rm -fr *.pb.ex cpp
+	for p in $(shell ls semaphore/*.proto); do protoc --cpp_out=/tmp/protoc-test-out $$p; done

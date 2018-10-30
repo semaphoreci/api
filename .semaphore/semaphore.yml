@@ -9,7 +9,7 @@ blocks:
   - name: "Proto files tests"
     task:
       jobs:
-      - name: Go Code Generation
+      - name: Code Generation
         commands:
           - checkout
           - make install
