@@ -1,0 +1,16 @@
+version: v1.0
+name: Tests
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Proto files tests"
+    task:
+      jobs:
+      - name: Go Code Generation
+        commands:
+          - checkout
+          - make install
+          - make test
