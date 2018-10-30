@@ -1,0 +1,22 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+
+  - selector: semaphore.notifications.v1alpha.NotificationsApi.ListNotifications
+    get: /api/v1alpha/notifications
+
+  - selector: semaphore.notifications.v1alpha.NotificationsApi.GetNotification
+    get: /api/v1alpha/notifications/{notification_id_or_name}
+
+  - selector: semaphore.notifications.v1alpha.NotificationsApi.CreateNotification
+    post: /api/v1alpha/notifications
+    body: "*"
+
+  - selector: semaphore.notifications.v1alpha.NotificationsApi.UpdateNotification
+    patch: /api/v1alpha/notifications/{notification_id_or_name}
+    body: "notification"
+
+  - selector: semaphore.notifications.v1alpha.NotificationsApi.DeleteNotification
+    delete: /api/v1alpha/notifications/{notification_id_or_name}
