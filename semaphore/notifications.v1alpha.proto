@@ -123,12 +123,15 @@ message Notification {
           int32 retries = 5;
         }
 
-        // [optional] name of the rule
-        string name = 1;
         Slack slack = 2;
         Email email = 3;
         Webhook webhooks = 4;
       }
+      
+      // [optional] name of the rule
+      string name = 1;
+      Filter filter = 2;
+      Notify notify = 3;
     }
 
     // Rules must have at least one element. Maximal number of rules: 20.
