@@ -123,9 +123,11 @@ message Notification {
           int32 retries = 5;
         }
 
-        Slack slack = 1;
-        Email email = 2;
-        Webhook webhooks = 3;
+        // [optional] name of the rule
+        string name = 1;
+        Slack slack = 2;
+        Email email = 3;
+        Webhook webhooks = 4;
       }
     }
 
