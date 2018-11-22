@@ -13,3 +13,7 @@ http:
   - selector: semaphore.jobs.v1alpha.JobsApi.CreateJob
     post: /api/v1alpha/jobs
     body: "*"
+
+  - selector: semaphore.jobs.v1alpha.JobsApi.StopJob
+    post: /api/v1alpha/jobs/{job_id}/stop
+    body: "*"

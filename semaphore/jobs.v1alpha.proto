@@ -6,6 +6,7 @@ service JobsApi {
   rpc ListJobs(ListJobsRequest) returns (ListJobsResponse);
   rpc GetJob(GetJobRequest) returns (Job);
   rpc CreateJob(Job) returns (Job);
+  rpc StopJob(StopJobRequest) returns (Empty);
 }
 
 message Job {
@@ -58,7 +59,7 @@ message Job {
     enum Result {
       NONE = 0;    // Job has not yet finished.
       PASSED = 1;  // Succesfully finished job.
-      FAILED = 2;  // Job has failed, either because a command has failed, 
+      FAILED = 2;  // Job has failed, either because a command has failed,
                    // or because dependancies are not available (i.e. secrets).
       STOPPED = 3; // Job was terminated before finishing.
     }
@@ -109,5 +110,9 @@ message ListJobsResponse {
 }
 
 message GetJobRequest {
+  string job_id = 1;
+}
+
+message StopJobRequest {
   string job_id = 1;
 }
