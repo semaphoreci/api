@@ -116,3 +116,5 @@ message GetJobRequest {
 message StopJobRequest {
   string job_id = 1;
 }
+
+message Empty {}
