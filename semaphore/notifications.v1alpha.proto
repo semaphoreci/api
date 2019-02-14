@@ -27,12 +27,6 @@ message Notification {
           FINISHED = 1;
         }
 
-        enum Result {
-          PASSED = 0;
-          FAILED = 1;
-          STOPPED = 2;
-        }
-
         // List of projects to trigger this rule.
         // By default: No project.
         //
@@ -77,14 +71,14 @@ message Notification {
 
         // List of results to trigger this rule.
         // Default: every result.
-        repeated Result results = 6;
+        repeated string results = 6;
       }
 
       message Notify {
         //
         // Description of the slack notification.
         // [required] endpoint - slack webhook to hit
-        // [optional] channels - list of channels, defualt: taken from endpoint
+        // [optional] channels - list of channels, default: taken from endpoint
         // [optional] message - default: TODO
         //
         message Slack {
@@ -127,7 +121,7 @@ message Notification {
         Email email = 3;
         Webhook webhooks = 4;
       }
-      
+
       // [optional] name of the rule
       string name = 1;
       Filter filter = 2;
