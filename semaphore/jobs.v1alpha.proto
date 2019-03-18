@@ -27,7 +27,21 @@ message Job {
         string os_image = 2;
       }
 
+      message Container {
+        string name = 1;
+        string image = 2;
+        string command = 3;
+        repeated EnvVar env_vars = 4;
+        repeated Secret secrets = 5;
+      }
+
+      message ImagePullSecret {
+        string name = 1;
+      }
+
       Machine machine = 1;
+      repeated Container containers = 2;
+      repeated ImagePullSecret image_pull_secrets = 3;
     }
 
     message Secret {
