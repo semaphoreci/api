@@ -66,6 +66,8 @@ message Job {
     repeated File files = 5;
 
     repeated string commands = 6;
+    
+    repeated string epilogue_commands = 7; // deprecated in favor of epilogue_always_commands
     repeated string epilogue_always_commands = 8;
     repeated string epilogue_on_pass_commands = 9;
     repeated string epilogue_on_fail_commands = 10;
