@@ -5,6 +5,7 @@ package semaphore.jobs.v1alpha;
 service JobsApi {
   rpc ListJobs(ListJobsRequest) returns (ListJobsResponse);
   rpc GetJob(GetJobRequest) returns (Job);
+  rpc GetJobDebugSSHKey(GetJobDebugSSHKeyRequest) returns (JobDebugSSHKey)
   rpc CreateJob(Job) returns (Job);
   rpc StopJob(StopJobRequest) returns (Empty);
 }
@@ -66,7 +67,7 @@ message Job {
     repeated File files = 5;
 
     repeated string commands = 6;
-    
+
     repeated string epilogue_commands = 7; // deprecated in favor of epilogue_always_commands
     repeated string epilogue_always_commands = 8;
     repeated string epilogue_on_pass_commands = 9;
@@ -136,3 +137,14 @@ message StopJobRequest {
 }
 
 message Empty {}
+
+// Requests a Debug SSH key for the job with ID.
+// The key is only available for RUNNING jobs.
+// For PENDING, QUEUED and FINISHED a not-found GRPC error will be returned.
+message GetJobDebugSSHKeyRequest {
+  string job_id = 1;
+}
+
+message JobDebugSSHKey {
+  string key = 1;
+}
