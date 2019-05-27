@@ -5,7 +5,7 @@ package semaphore.jobs.v1alpha;
 service JobsApi {
   rpc ListJobs(ListJobsRequest) returns (ListJobsResponse);
   rpc GetJob(GetJobRequest) returns (Job);
-  rpc GetJobDebugSSHKey(GetJobDebugSSHKeyRequest) returns (JobDebugSSHKey)
+  rpc GetJobDebugSSHKey(GetJobDebugSSHKeyRequest) returns (JobDebugSSHKey);
   rpc CreateJob(Job) returns (Job);
   rpc StopJob(StopJobRequest) returns (Empty);
 }
