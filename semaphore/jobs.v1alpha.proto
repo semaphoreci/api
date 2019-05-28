@@ -140,7 +140,7 @@ message Empty {}
 
 // Requests a Debug SSH key for the job with ID.
 // The key is only available for RUNNING jobs.
-// For PENDING, QUEUED and FINISHED a not-found GRPC error will be returned.
+// For PENDING, QUEUED and FINISHED a failed-precondition GRPC error will be returned.
 message GetJobDebugSSHKeyRequest {
   string job_id = 1;
 }
