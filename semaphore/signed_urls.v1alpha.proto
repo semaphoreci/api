@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package semaphore.signed_urls.v1alpha;
+
+option go_package = "signed_urls";
+
+// all operations are synchronous
+service SignedUrlService {
+  rpc Push(PushRequest) returns (PushResponse);
+  rpc Pull(PullRequest) returns (PullResponse);
+  rpc Yank(YankRequest) returns (YankResponse);
+}
+
+// Request for Push
+// Contains a list of paths to upload, and if the upload is forced to overwrite
+// If the push has an expire to be set, it's added to the paths list
+message PushRequest {
+  repeated string paths = 1;
+  bool is_force = 2;
+}
+
+// Response for Push
+// Contains a list of Signed URLs
+message PushResponse {
+  repeated SignedURL urls = 1;
+}
+
+// Request for Pull
+// Contains a path to download from
+message PullRequest {
+  string path = 1;
+}
+
+// Response for Pull
+// Contains a list of Signed URLs
+message PullResponse {
+  repeated SignedURL urls = 1;
+}
+
+// Request for Yank
+// Contains a path to delete
+message YankRequest {
+  string path = 1;
+}
+
+// Response for Yank
+message YankResponse {
+  SignedURL url = 1;
+}
+
+// Contains an url and its method type
+// The path on the GCS can be parsed out of it, so it is not needed
+message SignedURL {
+  string url = 1;
+  enum Method {
+    PUT = 0; // overwrites storage object
+    GET = 1; // reads storage object
+    DELETE = 2; // deletes storage object or path
+    HEAD = 3; // queries object or path existance
+    POST = 4 // concatenates to storage object
+  }
+  Method method = 2;
+}
