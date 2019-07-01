@@ -13,7 +13,7 @@ service SignedUrlService {
 
 // Request for Push
 // Contains a list of paths to upload, and if the upload is forced to overwrite
-// If the push has an expire to be set, it's added to the paths list
+// If the push has an expire to be set, it's appended to the paths list
 message PushRequest {
   repeated string paths = 1;
   bool is_force = 2;
@@ -57,7 +57,7 @@ message SignedURL {
     GET = 1; // reads storage object
     DELETE = 2; // deletes storage object or path
     HEAD = 3; // queries object or path existance
-    POST = 4 // concatenates to storage object
+    POST = 4; // concatenates to storage object
   }
   Method method = 2;
 }
