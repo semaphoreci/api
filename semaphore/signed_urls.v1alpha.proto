@@ -16,7 +16,7 @@ service SignedUrlService {
 // If the push has an expire to be set, it's appended to the paths list, and it will be appended to the urls as well
 // If the push is not forced, a HEAD signed URL is appended to the urls list
 message PushRequest {
-  string bucket_name = 1;
+  string token = 1;
   repeated string paths = 2;
   string force_path = 3;
 }
@@ -30,7 +30,7 @@ message PushResponse {
 // Request for Pull
 // Contains a path to download from
 message PullRequest {
-  string bucket_name = 1;
+  string token = 1;
   string path = 2;
 }
 
@@ -43,7 +43,7 @@ message PullResponse {
 // Request for Yank
 // Contains a path to delete
 message YankRequest {
-  string bucket_name = 1;
+  string token = 1;
   string path = 2;
 }
 
@@ -57,10 +57,10 @@ message YankResponse {
 message SignedURL {
   string url = 1;
   enum Method {
-    PUT = 0; // overwrites storage object
+    DELETE = 0; // deletes storage object or path
     GET = 1; // reads storage object
-    DELETE = 2; // deletes storage object or path
-    HEAD = 3; // queries object or path existance
+    HEAD = 2; // queries object or path existance
+    PUT = 3; // overwrites storage object
     POST = 4; // concatenates to storage object
   }
   Method method = 2;
