@@ -16,9 +16,8 @@ service SignedUrlService {
 // If the push has an expire to be set, it's appended to the paths list, and it will be appended to the urls as well
 // If the push is not forced, a HEAD signed URL is appended to the urls list
 message PushRequest {
-  string token = 1;
-  repeated string paths = 2;
-  string force_path = 3;
+  repeated string paths = 1;
+  string force_path = 2;
 }
 
 // Response for Push
@@ -30,8 +29,7 @@ message PushResponse {
 // Request for Pull
 // Contains a path to download from
 message PullRequest {
-  string token = 1;
-  string path = 2;
+  string path = 1;
 }
 
 // Response for Pull
@@ -43,8 +41,7 @@ message PullResponse {
 // Request for Yank
 // Contains a path to delete
 message YankRequest {
-  string token = 1;
-  string path = 2;
+  string path = 1;
 }
 
 // Response for Yank
