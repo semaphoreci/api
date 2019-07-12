@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package semaphore.signed_urls.v1alpha;
+package semaphore.artifacts.v1alpha;
 
 option go_package = "signed_urls";
 
 // all operations are synchronous
-service SignedUrlService {
+service ArtifactsService {
   rpc Push(PushRequest) returns (PushResponse);
   rpc Pull(PullRequest) returns (PullResponse);
   rpc Yank(YankRequest) returns (YankResponse);
