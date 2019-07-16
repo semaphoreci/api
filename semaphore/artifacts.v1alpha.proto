@@ -13,8 +13,8 @@ service ArtifactsService {
 
 // Request for Push
 // Contains a list of paths to upload.
-// If the push has an expire to be set, it's appended to the paths list, and it will be appended to the urls as well.
 // If the push is not forced, the first of every two signed URLs is a HEAD to check if they can be overwritten.
+// If the push has an expire to be set, it's appended to the paths list, and it will be appended to the urls as well.
 message PushRequest {
   repeated string paths = 1;
   bool force = 2;
