@@ -46,7 +46,7 @@ message YankRequest {
 
 // Response for Yank
 message YankResponse {
-  SignedURL url = 1;
+  repeated SignedURL urls = 1;
 }
 
 // Contains an url and its method type
