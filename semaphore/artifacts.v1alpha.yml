@@ -12,5 +12,4 @@ http:
     get: /api/v1alpha/artifacts/{path}
 
   - selector: semaphore.artifacts.v1alpha.ArtifactsService.Yank
-    delete: /api/v1alpha/artifacts
-    body: "*"
+    delete: /api/v1alpha/artifacts/{path}
