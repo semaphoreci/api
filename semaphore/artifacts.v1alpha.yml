@@ -9,7 +9,7 @@ http:
     body: "*"
 
   - selector: semaphore.artifacts.v1alpha.ArtifactsService.Pull
-    get: /api/v1alpha/artifacts?{path}
+    get: /api/v1alpha/artifacts/{path}
 
   - selector: semaphore.artifacts.v1alpha.ArtifactsService.Yank
     delete: /api/v1alpha/artifacts
