@@ -6,46 +6,25 @@ option go_package = "artifacts";
 
 // all operations are synchronous
 service ArtifactsService {
-  rpc Push(PushRequest) returns (PushResponse);
-  rpc Pull(PullRequest) returns (PullResponse);
-  rpc Yank(YankRequest) returns (YankResponse);
+  rpc GetSignedURLs(GetSignedURLsRequest) returns (GetSignedURLsResponse);
 }
 
-// Request for Push
-// Contains a list of paths to upload.
-// If the push is not forced, the first of every two signed URLs is a HEAD to check if they can be overwritten.
-// If the push has an expire to be set, it's appended to the paths list, and it will be appended to the urls as well.
-message PushRequest {
+// Request for Generating signed URLs with the given type.
+// Contains a list of paths as the Google Cloud Storage destination or source based on the action type.
+message GetSignedURLsRequest {
   repeated string paths = 1;
-  bool force = 2;
+  enum Type {
+    PUSH = 0; // gets signed URLs for Push operation without force
+    PUSHFORCE = 1; // gets signed URLs for Push operation with force
+    PULL = 2; // gets signed URLs for Pull operation
+    YANK = 3; // gets signed URLs for Yank operation
+  }
+  Type type = 2;
 }
 
-// Response for Push
+// Response for GetSignedURLs
 // Contains a list of Signed URLs
-message PushResponse {
-  repeated SignedURL urls = 1;
-}
-
-// Request for Pull
-// Contains a path to download from
-message PullRequest {
-  string path = 1;
-}
-
-// Response for Pull
-// Contains a list of Signed URLs
-message PullResponse {
-  repeated SignedURL urls = 1;
-}
-
-// Request for Yank
-// Contains a path to delete
-message YankRequest {
-  string path = 1;
-}
-
-// Response for Yank
-message YankResponse {
+message GetSignedURLsResponse {
   repeated SignedURL urls = 1;
 }
 
