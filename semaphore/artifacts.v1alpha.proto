@@ -6,12 +6,12 @@ option go_package = "artifacts";
 
 // all operations are synchronous
 service ArtifactsService {
-  rpc GetSignedURLs(GetSignedURLsRequest) returns (GetSignedURLsResponse);
+  rpc GenerateSignedUrls(GenerateSignedUrlsRequest) returns (GenerateSignedUrlsResponse);
 }
 
 // Request for Generating signed URLs with the given type.
 // Contains a list of paths as the Google Cloud Storage destination or source based on the action type.
-message GetSignedURLsRequest {
+message GenerateSignedUrlsRequest {
   repeated string paths = 1;
   enum Type {
     PUSH = 0; // gets signed URLs for Push operation without force
@@ -22,9 +22,9 @@ message GetSignedURLsRequest {
   Type type = 2;
 }
 
-// Response for GetSignedURLs
+// Response for GenerateSignedUrls
 // Contains a list of Signed URLs
-message GetSignedURLsResponse {
+message GenerateSignedUrlsResponse {
   repeated SignedURL urls = 1;
 }
 

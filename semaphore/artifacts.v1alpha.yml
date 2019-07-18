@@ -4,12 +4,6 @@ config_version: 3
 http:
   rules:
 
-  - selector: semaphore.artifacts.v1alpha.ArtifactsService.Push
-    put: /api/v1alpha/artifacts
+  - selector: semaphore.artifacts.v1.ArtifactsService.GenerateSignedUrls
+    post: /api/v1alpha/artifacts
     body: "*"
-
-  - selector: semaphore.artifacts.v1alpha.ArtifactsService.Pull
-    get: /api/v1alpha/artifacts/{path}
-
-  - selector: semaphore.artifacts.v1alpha.ArtifactsService.Yank
-    delete: /api/v1alpha/artifacts/{path}
