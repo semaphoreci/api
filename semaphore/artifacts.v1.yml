@@ -4,6 +4,6 @@ config_version: 3
 http:
   rules:
 
-  - selector: semaphore.artifacts.v1.ArtifactsService.GenerateSignedUrls
+  - selector: semaphore.artifacts.v1.ArtifactsService.SignUrls
     post: /api/v1/artifacts
     body: "*"
