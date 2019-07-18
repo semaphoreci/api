@@ -5,5 +5,5 @@ http:
   rules:
 
   - selector: semaphore.artifacts.v1.ArtifactsService.GenerateSignedUrls
-    post: /api/v1alpha/artifacts
+    post: /api/v1/artifacts
     body: "*"
