@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package semaphore.artifacts.v1alpha;
+package semaphore.artifacts.v1;
 
-option go_package = "signed_urls";
+option go_package = "artifacts";
 
 // all operations are synchronous
 service ArtifactsService {
