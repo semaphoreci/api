@@ -1,0 +1,9 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+
+  - selector: semaphore.artifacts.v1.ArtifactsService.GenerateSignedURLs
+    post: /api/v1/artifacts
+    body: "*"

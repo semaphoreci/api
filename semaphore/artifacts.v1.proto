@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package semaphore.artifacts.v1;
+
+option go_package = "artifacts";
+
+// all operations are synchronous
+service ArtifactsService {
+  rpc GenerateSignedURLs(GenerateSignedURLsRequest) returns (GenerateSignedURLsResponse);
+}
+
+// Request for Generating signed URLs with the given type.
+// Contains a list of paths as the Google Cloud Storage destination or source based on the action type.
+message GenerateSignedURLsRequest {
+  repeated string paths = 1;
+  enum Type {
+    PUSH = 0; // gets signed URLs for Push operation without force
+    PUSHFORCE = 1; // gets signed URLs for Push operation with force
+    PULL = 2; // gets signed URLs for Pull operation
+    YANK = 3; // gets signed URLs for Yank operation
+  }
+  Type type = 2;
+}
+
+// Response for GenerateSignedURLs
+// Contains a list of Signed URLs
+message GenerateSignedURLsResponse {
+  repeated SignedURL URLs = 1;
+}
+
+// Contains an URL and its method type
+// The path on the GCS can be parsed out of it, so it is not needed
+message SignedURL {
+  string URL = 1;
+  enum Method {
+    DELETE = 0; // deletes storage object or path
+    GET = 1; // reads storage object
+    HEAD = 2; // queries object or path existance
+    PUT = 3; // overwrites storage object
+    POST = 4; // concatenates to storage object
+  }
+  Method method = 2;
+}
