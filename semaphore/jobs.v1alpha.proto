@@ -152,4 +152,5 @@ message JobDebugSSHKey {
 
 message CreateDebugJobRequest {
   string job_id = 1;
+  int32 duration = 2; // Duration of debug jobs in minutes, defaults to 60 minutes when set to 0.
 }
