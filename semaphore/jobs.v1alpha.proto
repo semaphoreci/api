@@ -7,6 +7,7 @@ service JobsApi {
   rpc GetJob(GetJobRequest) returns (Job);
   rpc GetJobDebugSSHKey(GetJobDebugSSHKeyRequest) returns (JobDebugSSHKey);
   rpc CreateJob(Job) returns (Job);
+  rpc CreateDebugJob(CreateDebugJobRequest) returns (Job);
   rpc StopJob(StopJobRequest) returns (Empty);
 }
 
@@ -147,4 +148,9 @@ message GetJobDebugSSHKeyRequest {
 
 message JobDebugSSHKey {
   string key = 1;
+}
+
+message CreateDebugJobRequest {
+  string job_id = 1;
+  int32 duration = 2; // Duration of debug jobs in minutes, defaults to 60 minutes when set to 0.
 }
