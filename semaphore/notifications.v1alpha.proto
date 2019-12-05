@@ -75,16 +75,23 @@ message Notification {
       }
 
       message Notify {
+        enum Status {
+          ACTIVE = 0;
+          INACTIVE = 1;
+        }
+
         //
         // Description of the slack notification.
         // [required] endpoint - slack webhook to hit
         // [optional] channels - list of channels, default: taken from endpoint
         // [optional] message - default: TODO
+        // [optional] status - activity status. Default: ACTIVE
         //
         message Slack {
           string endpoint = 1;
           repeated string channels = 2;
           string message = 3;
+          Status status = 4;
         }
 
         //
@@ -93,12 +100,14 @@ message Notification {
         // [required] cc - email addresses in the CC field. At least one is required.
         // [optional] bcc - email addresses in the BCC field.
         // [optional] content - content of the email. Default: TODO
+        // [optional] status - activity status. Default: ACTIVE
         //
         message Email {
           string subject = 1;
           repeated string cc = 2;
           repeated string bcc = 3;
           string content = 4;
+          Status status = 5;
         }
 
         //
@@ -107,12 +116,14 @@ message Notification {
         // [optional] timeout - delivery timeout. Defualt: 500ms. Must be in range (0..1000)ms.
         // [optional] action - http verb to use. Default: POST.
         // [optional] retries - number of times to retry delivery. Default: 1. Muse be in range (1..3).
+        // [optional] status - activity status. Default: ACTIVE
         //
         message Webhook {
           string endpoint = 1;
           int32 timeout = 2;
           string action = 3;
           int32 retries = 4;
+          Status status = 5;
         }
 
         Slack slack = 2;
