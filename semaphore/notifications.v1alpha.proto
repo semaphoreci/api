@@ -128,7 +128,7 @@ message Notification {
 
         Slack slack = 2;
         Email email = 3;
-        Webhook webhooks = 4;
+        Webhook webhook = 4;
       }
 
       // [optional] name of the rule
