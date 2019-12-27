@@ -1,0 +1,8 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+
+    - selector: semaphore.logs.v1.LogsApi.GetLogs
+      get: /api/v1/logs/{job_id}
