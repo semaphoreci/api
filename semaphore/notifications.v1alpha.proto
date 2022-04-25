@@ -117,6 +117,7 @@ message Notification {
         // [optional] action - http verb to use. Default: POST.
         // [optional] retries - number of times to retry delivery. Default: 1. Muse be in range (1..3).
         // [optional] status - activity status. Default: ACTIVE
+        // [optional] secret - name of a Semaphore secret, which will be used to sign the payload.
         //
         message Webhook {
           string endpoint = 1;
@@ -124,6 +125,7 @@ message Notification {
           string action = 3;
           int32 retries = 4;
           Status status = 5;
+          string secret = 6;
         }
 
         Slack slack = 2;
