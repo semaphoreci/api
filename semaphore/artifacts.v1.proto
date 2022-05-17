@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package semaphore.artifacts.v1;
 
-option go_package = "artifacts";
+option go_package = "./artifacts.v1;semaphore_artifacts_v1";
 
 // all operations are synchronous
 service ArtifactsService {

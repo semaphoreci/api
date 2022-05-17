@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package semaphore.dashboards.v1alpha;
 
+option go_package = "./dashboards.v1alpha;semaphore_dashboards_v1alpha";
+
 service DashboardsApi {
   rpc ListDashboards(ListDashboardsRequest) returns (ListDashboardsResponse);
   rpc GetDashboard(GetDashboardRequest) returns (Dashboard);

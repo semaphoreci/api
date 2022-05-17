@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package semaphore.notifications.v1alpha;
 
+option go_package = "./notifications.v1alpha;semaphore_notifications_v1alpha";
+
 service NotificationsApi {
   rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
   rpc GetNotification(GetNotificationRequest) returns (Notification);
