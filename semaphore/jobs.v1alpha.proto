@@ -101,6 +101,7 @@ message Job {
 
       string ip = 1;
       repeated Port ports = 2;
+      string name = 3;
     }
 
     Result result = 1;
