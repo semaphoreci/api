@@ -21,6 +21,10 @@ http:
     post: /api/v1alpha/jobs/{job_id}/debug
     body: "*"
 
+  - selector: semaphore.jobs.v1alpha.JobsApi.CreateDebugProject
+    post: /api/v1alpha/jobs/{job_id}/project_debug
+    body: "*"
+
   - selector: semaphore.jobs.v1alpha.JobsApi.StopJob
     post: /api/v1alpha/jobs/{job_id}/stop
     body: "*"
