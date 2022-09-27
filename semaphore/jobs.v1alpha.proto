@@ -161,6 +161,6 @@ message CreateDebugJobRequest {
 
 message CreateDebugProjectRequest {
   string project_id = 1;
-  int32 duration = 2; // Duration of debug jobs in minutes, defaults to 60 minutes when set to 0.
-  string machine_type = 3; // machine type to use for debugging; default: e1-standard-2
+  int32 duration = 2; // Duration of debug jobs in minutes
+  string machine_type = 3; // machine type to use for debugging
 }
