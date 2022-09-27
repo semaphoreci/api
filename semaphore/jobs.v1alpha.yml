@@ -22,7 +22,7 @@ http:
     body: "*"
 
   - selector: semaphore.jobs.v1alpha.JobsApi.CreateDebugProject
-    post: /api/v1alpha/jobs/{job_id}/project_debug
+    post: /api/v1alpha/jobs/project_debug/{project_id}
     body: "*"
 
   - selector: semaphore.jobs.v1alpha.JobsApi.StopJob
