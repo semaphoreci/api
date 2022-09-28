@@ -160,7 +160,7 @@ message CreateDebugJobRequest {
 }
 
 message CreateDebugProjectRequest {
-  string project_id = 1;
+  string project_id_or_name = 1;
   int32 duration = 2; // Duration of debug jobs in minutes
   string machine_type = 3; // machine type to use for debugging
 }
