@@ -12,6 +12,7 @@ service JobsApi {
   rpc CreateDebugJob(CreateDebugJobRequest) returns (Job);
   rpc CreateDebugProject(CreateDebugProjectRequest) returns (Job);
   rpc StopJob(StopJobRequest) returns (Empty);
+  rpc RawLogs(RawLogsRequest) returns (RawLogsResponse);
 }
 
 message Job {
@@ -163,4 +164,13 @@ message CreateDebugProjectRequest {
   string project_id_or_name = 1;
   int32 duration = 2; // Duration of debug jobs in minutes
   string machine_type = 3; // machine type to use for debugging
+}
+
+message RawLogsRequest {
+  string job_id = 1;
+  int32 starting_line = 2;
+}
+
+message RawLogsResponse {
+  repeated string events = 2;
 }
