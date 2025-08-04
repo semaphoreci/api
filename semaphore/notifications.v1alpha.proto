@@ -19,6 +19,8 @@ message Notification {
 
     int64 create_time = 3; // unix timestamp of creation
     int64 update_time = 4; // unix timestamp of last update
+
+    string creator_id = 5;
   }
 
   message Spec {
