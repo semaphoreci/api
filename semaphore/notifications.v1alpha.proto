@@ -76,6 +76,16 @@ message Notification {
         // List of results to trigger this rule.
         // Default: every result.
         repeated string results = 6;
+
+        // List of tags to trigger this rule.
+        // Default: all tags.
+        //
+        // Examples:
+        //   - "v1.0.0" - strictly match the v1.0.0 tag
+        //   - "/^v\\d+\\.\\d+\\.\\d+$/" - regex matches semantic version tags
+        //   - "release-*" - wildcard match for tags starting with 'release-'
+        //
+        repeated string tags = 7;
       }
 
       message Notify {
